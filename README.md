@@ -123,3 +123,22 @@ curl -X POST $URL \
 
 Este documento proporciona una guía rápida para la instalación y el uso de los principales endpoints del proyecto. Asegúrate de reemplazar los valores de ejemplo con los datos reales antes de ejecutar los comandos.
 
+
+# Decisiones Tomadas en el Proyecto
+
+## 1. **Modelo de Datos**:
+   - **Ingrediente**: Modelo simple con campos como `nombre`, `is_vegan`, `is_gluten_free` e `is_kosher` para categorizar ingredientes según sus características.
+   - **Plato**: Relación `ManyToMany` con `Ingrediente`, usando propiedades para calcular dinámicamente si el plato es vegano, sin gluten o kosher.
+
+## 2. **Serializadores**:
+   - Usé `PrimaryKeyRelatedField` en el `PlatoSerializer` para enviar solo IDs de ingredientes, lo que es más eficiente.
+   - Los campos `is_vegan`, `is_gluten_free` e `is_kosher` se establecen como solo lectura para ser calculados dinámicamente.
+
+## 3. **Vistas**:
+   - Utilicé `ModelViewSet` para las vistas de CRUD, lo que simplifica la lógica. Usé un método para elegir el serializador correcto en función de la acción (crear/actualizar o leer).
+
+## 4. **Pruebas**:
+   - Implementé pruebas CRUD con `APITestCase` para verificar la correcta creación, lectura, actualización y eliminación de platos e ingredientes.
+
+## 5. **Relaciones**:
+   - Los platos se relacionan con los ingredientes mediante IDs para eficiencia, evitando enviar información completa de los ingredientes en cada solicitud.
