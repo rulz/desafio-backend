@@ -1,0 +1,8 @@
+Django==5.1.5
+django-extensions==3.2.3
+djangorestframework==3.15.2
+markdown==3.7
+django-filter==24.3
+requests==2.32.3
+djangorestframework_simplejwt==5.4.0
+slack_sdk==3.34.0
